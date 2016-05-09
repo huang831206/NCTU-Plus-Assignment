@@ -5,7 +5,7 @@ module PostsHelper
 
   def open_time_fmt(time)
     if time
-      fmt_time time
+      fmt_time time.in_time_zone("Taipei")
     else
       "立即"
     end
@@ -13,7 +13,7 @@ module PostsHelper
   
   def close_time_fmt(time)
     if time
-      fmt_time time
+      fmt_time time.in_time_zone("Taipei")
     else
       "永不"
     end

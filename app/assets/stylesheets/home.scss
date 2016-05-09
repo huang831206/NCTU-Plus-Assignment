@@ -1,6 +1,14 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+article{
+  margin: 1%;
+}
+article.chat, article.posts {
+  width: 48%;
+  float: left;
+  display: inline-block;
+}
 #message {
   display: none;
 }
@@ -9,4 +17,6 @@
     width: 200px;
   }
 }
-
+p.flash{
+  color: red;
+}

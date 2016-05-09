@@ -1,0 +1,7 @@
+<article id="new-post">
+<h2>新增公告</h2>
+<%= simple_form_for @post do |f| %>
+  <%= render partial: 'form_content', locals: {f: f} %>
+  <%= f.button :submit, class: "btn btn-primary", value: "新增公告", "data-disable-with" => "新增中..." %>
+<% end %>
+</article>

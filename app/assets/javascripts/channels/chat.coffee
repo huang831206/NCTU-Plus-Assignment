@@ -2,7 +2,8 @@ App.chat = App.cable.subscriptions.create "ChatChannel",
   connected: ->
     # Called when the subscription is ready for use on the server
     window.chat = {}
-    if document.readyState is "complete"
+    if document.readyState is "complete" and not window.show_msg
+      console.log "APP MSG"
       @print_message("系統","聊天室已連接")
       window.show_msg = true
 
@@ -10,6 +11,7 @@ App.chat = App.cable.subscriptions.create "ChatChannel",
     # Called when the subscription has been terminated by the server
     @print_message("系統","聊天室已中斷連線")
     window.chat = undefined
+    window.show_msg = false
     $("#nickname").show()
     $("#nickname > input").focus()
     $("#message").hide()
@@ -48,7 +50,7 @@ App.chat = App.cable.subscriptions.create "ChatChannel",
   print_message: (sender,message) ->
     console.log(sender + ":" + message)
     if document.readyState is "complete"
-      html = $("<tr><td>#{sender}</td><td>#{message}</td></tr>")
+      html = $("<tr><td><strong>#{sender}</strong></td><td>#{message}</td></tr>")
       if sender is "系統"
         html.addClass("info")
       else if sender is window.chat["nickname"]

@@ -8,7 +8,7 @@ class ChatChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
     nickname = self.class.find_nickname(uuid)
     if nickname
-      ActionCable.server.broadcast :chat_channel, {action: "message", sender: "系統", message:"'#{nickname}'已離開"}
+      self.class.broadcast({action: "message", sender: "系統", message:"'#{nickname}'已離開"})
       self.class.remove_user_by_uuid(uuid)
     end
   end
@@ -18,11 +18,11 @@ class ChatChannel < ApplicationCable::Channel
   def send_message(data)
     nickname = self.class.find_nickname(data["uuid"])
     if nickname
-      ActionCable.server.broadcast :chat_channel, {
+      self.class.broadcast({
         action: "message", 
         sender: nickname,
         message: data["message"],
-      }
+      })
     end
     # No message for un-registered uuid
   end
@@ -31,8 +31,16 @@ class ChatChannel < ApplicationCable::Channel
   def register(data)
     new_uuid = self.uuid
     real_name = self.class.register_username(new_uuid,data["nickname"])
-    ActionCable.server.broadcast :chat_channel, {action: "register", uuid: new_uuid, nickname: real_name, token: data["token"]}
-    ActionCable.server.broadcast :chat_channel, {action: "message", sender: "系統", message:"'#{real_name}'加入聊天室"}
+    self.class.broadcast({action: "register", uuid: new_uuid, nickname: real_name, token: data["token"]})
+    self.class.broadcast({action: "message", sender: "系統", message:"'#{real_name}'加入聊天室"})
+  end
+
+  def self.broadcast(data)
+    ActionCable.server.broadcast :chat_channel, data
+  end
+
+  def self.broadcast_system_msg(msg)
+    broadcast({action: "message", sender: "系統", message: msg})
   end
 
   def self.reset

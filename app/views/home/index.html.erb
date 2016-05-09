@@ -1,5 +1,27 @@
-<h2>聊天室</h2>
+<article class="console">
+  <%= link_to "前往公告控制台", posts_path, class: "btn btn-primary" %>
+</article>
+<article class="posts">
+  <h2>公佈欄</h2>
+  <table class="table table-bordered table-hover" id="posts">
+    <thead>
+      <tr class="warning">
+        <th>公告內容</th>
+        <th>更新日期</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td><strong><%= post.title %></strong></td>
+          <td><%= fmt_time post.updated_at %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</article>
 <article class="chat">
+  <h2>聊天室</h2>
   <table class="table table-bordered table-hover" id="chat">
     <thead>
       <tr class="warning">
@@ -18,6 +40,4 @@
     <input type="text" id="input" placeholder="說些什麼吧！">
     <button type="submit" class="btn btn-primary btn-sm" id="submit">送出</button>
   </form>
-
-
 </article>

@@ -1,8 +1,10 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+window.show_msg = false
 $(window).load ->
-  if typeof window.show_msg is "undefiend" and typeof window.chat is "object"
+  if not window.show_msg and typeof window.chat is "object"
+    console.log "WINDOW MSG"
     window.show_msg = true
     # show connect again
     App.chat.print_message("系統","聊天室已連接")

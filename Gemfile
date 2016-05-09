@@ -30,8 +30,16 @@ gem 'redis', '~> 3.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# for postgreysql
 gem 'pg'
 gem 'rails_12factor', group: :production
+
+# posts
+gem 'kaminari', github: "amatsuda/kaminari", branch: 'master'
+gem 'bootstrap-kaminari-views'
+gem 'simple_form'
+
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

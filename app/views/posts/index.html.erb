@@ -1,0 +1,33 @@
+<article class="console">
+  <%= link_to "前往首頁", root_path, class: "btn btn-primary" %>
+  <%= link_to "新增公告", new_post_path, class: "btn btn-info" %>
+</article>
+<article class="admin-posts">
+  <h2>公佈欄</h2>
+  <table class="table table-bordered table-hover" id="posts">
+    <thead>
+      <tr class="warning">
+        <th>公告內容</th>
+        <th>更新日期</th>
+        <th>開放公告時間</th>
+        <th>關閉公告時間</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td><strong><%= post.title %></strong></td>
+          <td><%= fmt_time post.updated_at %></td>
+          <td><%= open_time_fmt post.open_time %></td>
+          <td><%= close_time_fmt post.close_time %></td>
+          <td>
+            <%= link_to "修改", edit_post_path(post), class: "btn btn-warning" %> 
+            <%= link_to "刪除", post_path(post), method: :delete , class: "btn btn-danger" %> 
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @posts, :theme => 'twitter-bootstrap-3' %>
+</article>

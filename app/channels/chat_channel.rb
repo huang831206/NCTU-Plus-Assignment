@@ -17,12 +17,16 @@ class ChatChannel < ApplicationCable::Channel
   # data: uuid, message
   def send_message(data)
     nickname = self.class.find_nickname(data["uuid"])
-    if nickname
+    if nickname && nickname !~ /bot/i
+      # check last talk time
+      #if !REDIS.exists("nctuplus.message.last_talk_time")
       self.class.broadcast({
         action: "message", 
         sender: nickname,
         message: CGI::escapeHTML(data["message"]),
       })
+      #REDIS.hincr("nctuplus.message.count",nickname)
+
     end
     # No message for un-registered uuid
   end

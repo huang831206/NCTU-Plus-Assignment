@@ -21,7 +21,7 @@ class ChatChannel < ApplicationCable::Channel
       self.class.broadcast({
         action: "message", 
         sender: nickname,
-        message: data["message"],
+        message: CGI::escapeHTML(data["message"]),
       })
     end
     # No message for un-registered uuid

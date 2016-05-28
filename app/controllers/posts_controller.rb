@@ -13,6 +13,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    @post.title = CGI::escapeHTML(@post.title);
     begin
       if @post.save
         flash[:notice] = "成功張貼公告：#{@post.title}"

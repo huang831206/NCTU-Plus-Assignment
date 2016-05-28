@@ -30,7 +30,7 @@ class ChatChannel < ApplicationCable::Channel
   # data: token, nickname
   def register(data)
     new_uuid = self.uuid
-    real_name = self.class.register_username(new_uuid,data["nickname"])
+    real_name = self.class.register_username(new_uuid,CGI::escapeHTML(data["nickname"]))
     self.class.broadcast({action: "register", uuid: new_uuid, nickname: real_name, token: data["token"]})
     self.class.broadcast({action: "message", sender: "系統", message:"'#{real_name}'加入聊天室"})
   end
